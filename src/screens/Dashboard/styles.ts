@@ -100,8 +100,8 @@ export const TransactionList = styled(
   showsVerticalScrollIndicator: false
 })``;
 
-export const Loading = styled.View`
-  flex: 1;
+export const Loading = styled.View `
+  flex: 1; 
   justify-content: center;
   align-items: center;
 `

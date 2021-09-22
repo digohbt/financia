@@ -22,7 +22,8 @@ import {
      Transactions,
      Title,
      TransactionList,
-     LogoutButton
+     LogoutButton,
+     Loading
 } from './styles'
 
 export  interface DataListProps extends TransactionCardProps {
@@ -104,6 +105,7 @@ export function Dashboard (){
         },
 
       }) 
+      setIsLoading(false)
       setData(transactionsFormatted)
     }
     useEffect( () => {
@@ -114,7 +116,12 @@ export function Dashboard (){
     } ,[]))
     return(
         <Container>
-          <ActivityIndicator />
+          {
+          inLoading ? 
+          <Loading>  
+             <ActivityIndicator  color={theme.colors.primary} size='large'/> 
+          </Loading> : 
+            <>
             <Header>
               <UserWrapper>
                 <UserInfo>
@@ -153,6 +160,10 @@ export function Dashboard (){
               />
             
             </Transactions>
+            </>
+           }
+         
+            
         </Container>
     )
 }
