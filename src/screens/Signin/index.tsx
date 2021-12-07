@@ -1,4 +1,5 @@
 import React ,{useContext} from 'react';
+import * as AppleAuthentication from 'expo-apple-authentication';
 
 import  { Container, Header, TitleWrapper ,Title ,SignInTitle ,Footer,FooterWrapper} from './styles';
 
@@ -7,13 +8,27 @@ import LogoSvg from '../../assets/logo.svg'
 import GoogleSvg from '../../assets/google.svg'
 import { RFValue } from 'react-native-responsive-fontsize'
 import {SigninSocialButton} from '../../components/SigninSocialButton'
-import {AuthContex} from '../../AuthContex'
+// import {AuthContex} from '../../AuthContex'
+import {useAuth} from '../../hooks/auth'
+import { Alert } from 'react-native';
 
 
 
 export function Signin() {
-    const data = useContext(AuthContex)
-    console.log(data)
+    // const data = useContext(AuthContex)
+    const {user, signInWithGoogle } = useAuth()
+
+  async  function HandlesSignInWithGoogle () {
+
+        try {
+            
+            await signInWithGoogle()
+        } catch (error) {
+            console.log(error)
+            Alert.alert('Não foi posssivel conectar com conta  ')
+        }
+    }
+
     return (
         <Container>
             <Header>
@@ -33,7 +48,7 @@ export function Signin() {
             </Header>
             <Footer>
                 <FooterWrapper>
-                    <SigninSocialButton title="Entrar com Google" svg={GoogleSvg} />
+                    <SigninSocialButton title="Entrar com Google" svg={GoogleSvg} onPress={() => HandlesSignInWithGoogle() } />
                     <SigninSocialButton title="Entrar com Apple" svg={AplleSvg} />
                 </FooterWrapper>
             </Footer>

@@ -19,11 +19,12 @@ import {
   Poppins_700Bold
 }from '@expo-google-fonts/poppins'
 
-import { Dashboard } from './src/screens/Dashboard'; 
-import { Signin } from './src/screens/Signin';
-import { CategorySelect } from './src/screens/CategorySelect';
 import theme from './src/global/styles/theme'
-import { AppRoutes } from './src/routes/app_routes'
+import {AuthProvider} from './src/hooks/auth'
+
+import { Dashboard } from './src/screens/Dashboard'; 
+import { CategorySelect } from './src/screens/CategorySelect';
+import { Routes } from './src/routes'
 
 export default function App() {
 const [fontsLoaded] = useFonts({
@@ -38,14 +39,10 @@ if(!fontsLoaded) {
 
   return (
     <ThemeProvider theme={theme}>
-     <NavigationContainer>
-      
        <StatusBar barStyle="light-content"  backgroundColor={theme.colors.primary} />
-      <AuthContex.Provider value={["Rodrigo"]} >
-       <Signin />
-      </AuthContex.Provider>
-
-     </NavigationContainer>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
     </ThemeProvider>
   )
 }
